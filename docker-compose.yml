@@ -45,7 +45,7 @@ services:
 
   elasticsearch1:
     build:
-      context: elasticsearch/
+      context: elasticsearch1/
       args:
         ELASTIC_VERSION: ${ELASTIC_VERSION}
     volumes:
@@ -70,15 +70,15 @@ services:
 
   elasticsearch2:
     build:
-      context: elasticsearch/
+      context: elasticsearch2/
       args:
         ELASTIC_VERSION: ${ELASTIC_VERSION}
     volumes:
       - ./elasticsearch2/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
       - elasticsearch2:/usr/share/elasticsearch/data:Z
-    # ports:
-    #   - 9201:9200
-    #   - 9301:9300
+    ports:
+      - 9201:9200
+      - 9301:9300
     environment:
       node.name: elasticsearch2
       ES_JAVA_OPTS: -Xms512m -Xmx512m
