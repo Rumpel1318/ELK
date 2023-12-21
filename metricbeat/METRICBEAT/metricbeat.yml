@@ -1,0 +1,60 @@
+metricbeat.modules:
+  - module: system
+    enabled: false
+
+  - module: logstash
+    metricsets: ["node", "node_stats"]
+    enabled: true
+    period: 10s
+    hosts: ["http://LOGSTASH:9600"]
+    username: "logstash_system"
+    password: "ODzl8Ewbn07J0LqarRp4GidDp6OoCq1"
+    xpack.enabled: true
+
+  - module: kibana
+    metricsets: ["stats"]
+    period: 10s
+    hosts: ["https://KIBANA:5601"]
+    ssl.enabled: true
+    username: "logstash_system"
+    password: "ODzl8Ewbn07J0LqarRp4GidDp6OoCq1"
+    xpack.enabled: true
+    ssl.certificate_authorities: ["/usr/share/metricbeat/config/certs/ca/ca.crt"]
+    ssl.certificate: "/usr/share/metricbeat/config/certs/KIBANA/KIBANA.crt"
+    ssl.key: "/usr/share/metricbeat/config/certs/KIBANA/KIBANA.key"
+    ssl.verification_mode: "certificate"
+
+  - module: elasticsearch
+    enabled: true
+    period: 10s
+    hosts: ["https://ELASTICMASTER:9200"]
+    ssl.enabled: true
+    username: "logstash_system"
+    password: "ODzl8Ewbn07J0LqarRp4GidDp6OoCq1"
+    xpack.enabled: true
+    ssl.certificate_authorities: ["/usr/share/metricbeat/config/certs/ca/ca.crt"]
+    ssl.certificate: "/usr/share/metricbeat/config/certs/ELASTICMASTER/ELASTICMASTER.crt"
+    ssl.key: "/usr/share/metricbeat/config/certs/ELASTICMASTER/ELASTICMASTER.key"
+    ssl.verification_mode: "certificate"
+
+  - module: elasticsearch
+    enabled: true
+    period: 10s
+    hosts: ["https://ELASTICSLAVE:9200"]
+    ssl.enabled: true
+    username: "logstash_system"
+    password: "ODzl8Ewbn07J0LqarRp4GidDp6OoCq1"
+    xpack.enabled: true
+    ssl.certificate_authorities: ["/usr/share/metricbeat/config/certs/ca/ca.crt"]
+    ssl.certificate: "/usr/share/metricbeat/config/certs/ELASTICSLAVE/ELASTICSLAVE.crt"
+    ssl.key: "/usr/share/metricbeat/config/certs/ELASTICSLAVE/ELASTICSLAVE.key"
+    ssl.verification_mode: "certificate"
+
+output.elasticsearch:
+  hosts: ["https://ELASTICMASTER:9200"]
+  username: "elastic"
+  password: "BuRIVIZEmKm6bYY00jP6aNBBV0rcKFtg"
+  protocol: "https"
+  ssl.certificate_authorities: ["config/certs/ca/ca.crt"]
+  ssl.certificate: "/usr/share/metricbeat/config/certs/ELASTICMASTER/ELASTICMASTER.crt"
+  ssl.key: "/usr/share/metricbeat/config/certs/ELASTICMASTER/ELASTICMASTER.key"

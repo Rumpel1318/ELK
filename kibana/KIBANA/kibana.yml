@@ -1,0 +1,24 @@
+server.port: 5601
+server.host: 0.0.0.0
+server.name: "KIBANA"
+server.ssl.enabled: true
+server.ssl.certificate: /usr/share/kibana/config/certs/KIBANA/KIBANA.crt
+server.ssl.key: /usr/share/kibana/config/certs/KIBANA/KIBANA.key
+elasticsearch.hosts: ["https://ELASTICMASTER:9200"]
+elasticsearch.username: "kibana_system"
+elasticsearch.password: "LQYWSVVQxGLueO9NWjr5qQN00J9Z3V2t"
+elasticsearch.pingTimeout: 1500
+elasticsearch.requestTimeout: 30000
+elasticsearch.ssl.certificate: /usr/share/kibana/config/certs/ELASTICMASTER/ELASTICMASTER.crt
+elasticsearch.ssl.key: /usr/share/kibana/config/certs/ELASTICMASTER/ELASTICMASTER.key
+elasticsearch.ssl.certificateAuthorities: [ "/usr/share/kibana/config/certs/ca/ca.crt" ]
+elasticsearch.ssl.verificationMode: certificate
+xpack.security.encryptionKey: "NyrtbhRa26POUEKcrcJJRFE9N7RAgHECNy2FL1hqAMC8KHJc0JSU2s7r6MDsA92T"
+xpack.reporting.encryptionKey: "NyrtbhRa26POUEKcrcJJRFE9N7RAgHECNy2FL1hqAMC8KHJc0JSU2s7r6MDsA92T"
+xpack.encryptedSavedObjects.encryptionKey: "NyrtbhRa26POUEKcrcJJRFE9N7RAgHECNy2FL1hqAMC8KHJc0JSU2s7r6MDsA92T"
+xpack.monitoring.ui.container.elasticsearch.enabled: true
+xpack.monitoring.enabled: true
+xpack.monitoring.elasticsearch.username: "kibana_system"
+xpack.monitoring.elasticsearch.password: "LQYWSVVQxGLueO9NWjr5qQN00J9Z3V2t"
+xpack.reporting.kibanaServer.hostname: KIBANA
+xpack.monitoring.collection.enabled: true

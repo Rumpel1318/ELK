@@ -1,0 +1,23 @@
+cluster.name: "siem-cluster"
+node.name: ELASTICSLAVE
+bootstrap.memory_lock: true
+network.host: 0.0.0.0
+discovery.seed_hosts: ["ELASTICMASTER"]
+cluster.initial_master_nodes: ["ELASTICMASTER"]
+xpack.security.enabled: true
+xpack.security.http.ssl.enabled: true
+xpack.security.http.ssl.key: /usr/share/elasticsearch/config/certs/ELASTICSLAVE/ELASTICSLAVE.key
+xpack.security.http.ssl.certificate: /usr/share/elasticsearch/config/certs/ELASTICSLAVE/ELASTICSLAVE.crt
+xpack.security.http.ssl.certificate_authorities: /usr/share/elasticsearch/config/certs/ca/ca.crt
+xpack.security.http.ssl.verification_mode: certificate
+xpack.security.transport.ssl.enabled: true
+xpack.security.transport.ssl.key: /usr/share/elasticsearch/config/certs/ELASTICSLAVE/ELASTICSLAVE.key
+xpack.security.transport.ssl.certificate: /usr/share/elasticsearch/config/certs/ELASTICSLAVE/ELASTICSLAVE.crt
+xpack.security.transport.ssl.certificate_authorities: /usr/share/elasticsearch/config/certs/ca/ca.crt
+xpack.security.transport.ssl.verification_mode: certificate
+xpack.license.self_generated.type: "basic"
+xpack.monitoring.collection.enabled: true
+search.allow_expensive_queries: true
+path.data: /usr/share/elasticsearch/data
+path.repo: 
+  - /usr/share/elasticsearch/snapshots

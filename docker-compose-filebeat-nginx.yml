@@ -1,0 +1,10 @@
+version: "3.8"
+services:
+  VISIONFILEBEATP01:
+    image: docker.elastic.co/beats/filebeat:8.8.1
+    container_name: VISIONFILEBEATP01
+    volumes:
+      - ./certs:/usr/share/filebeat/config/certs
+      - /etc/nginx/log:/var/log/nginx
+      - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
+    command: filebeat -e -strict.perms=false
