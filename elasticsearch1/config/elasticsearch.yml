@@ -23,9 +23,11 @@ cluster.name: docker-cluster
 node.name: elasticsearch1
 node.master: true
 node.data: false
+http.port: 9200
 transport.port: 9300
 discovery.seed_hosts: ["elasticsearch2"]
 cluster.initial_master_nodes: ["elasticsearch1"]
+bootstrap.memory_lock: true
 
 #
 # Add custom attributes to the node:
