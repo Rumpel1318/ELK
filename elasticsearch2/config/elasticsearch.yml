@@ -23,7 +23,9 @@ cluster.name: docker-cluster
 node.name: elasticsearch2
 node.client: true
 node.data: false
-#
+
+discovery.seed_hosts: ["elasticsearch1"]
+cluster.initial_master_nodes: ["elasticsearch1"]
 # Add custom attributes to the node:
 #
 # node.rack: r1
