@@ -1,10 +1,33 @@
+Install docker :
+
+    sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+    sudo dnf -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+    sudo systemctl --now enable docker
+
+Install kubernetes :
+
+    sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+    sudo dnf makecache
+    dnf install -y containerd.io
+    sudo mv /etc/containerd/config.toml /etc/containerd/config.toml.bak
+    containerd config default > config.toml
+    sudo nano config.toml
+
+Find the SystemdCgroup field and change its value to true.
+
+    SystemdCgroup = true
+    
+
+
+
+
 open port :
-    5044: Logstash Beats input
-    50000: Logstash TCP input
-    9600: Logstash monitoring API
-    9200: Elasticsearch HTTP
-    9300: Elasticsearch TCP transport
-    5601: Kibana
+5044: Logstash Beats input
+50000: Logstash TCP input
+9600: Logstash monitoring API
+9200: Elasticsearch HTTP
+9300: Elasticsearch TCP transport
+5601: Kibana
 
 
 sudo ufw allow 5044

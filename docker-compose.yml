@@ -1,7 +1,5 @@
 version: '3.7'
 
-services:
-
   # The 'setup' service runs a one-off script which initializes users inside
   # Elasticsearch — such as 'logstash_internal' and 'kibana_system' — with the
   # values of the passwords defined in the '.env' file. It also creates the
@@ -16,6 +14,8 @@ services:
   # due to the non-default profile it belongs to. To run it, either provide the
   # '--profile=setup' CLI flag to Compose commands, or "up" the service by name
   # such as 'docker compose up setup'.
+
+services:
   setup:
     profiles:
       - setup
@@ -40,21 +40,22 @@ services:
     networks:
       - elk
     depends_on:
-      - elasticsearch
+      - elasticsearch1
+      - elasticsearch2
 
-  elasticsearch:
+  elasticsearch1:
     build:
       context: elasticsearch/
       args:
         ELASTIC_VERSION: ${ELASTIC_VERSION}
     volumes:
-      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
-      - elasticsearch:/usr/share/elasticsearch/data:Z
+      - ./elasticsearch1/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
+      - elasticsearch1:/usr/share/elasticsearch/data:Z
     ports:
       - 9200:9200
       - 9300:9300
     environment:
-      node.name: elasticsearch
+      node.name: elasticsearch1
       ES_JAVA_OPTS: -Xms512m -Xmx512m
       # Bootstrap password.
       # Used to initialize the keystore during the initial startup of
@@ -62,7 +63,32 @@ services:
       ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-}
       # Use single node discovery in order to disable production mode and avoid bootstrap checks.
       # see: https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
-      discovery.type: single-node
+      discovery.type: multi-node #single node
+    networks:
+      - elk
+    restart: unless-stopped
+
+  elasticsearch2:
+    build:
+      context: elasticsearch/
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    volumes:
+      - ./elasticsearch2/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
+      - elasticsearch2:/usr/share/elasticsearch/data:Z
+    # ports:
+    #   - 9201:9200
+    #   - 9301:9300
+    environment:
+      node.name: elasticsearch2
+      ES_JAVA_OPTS: -Xms512m -Xmx512m
+      # Bootstrap password.
+      # Used to initialize the keystore during the initial startup of
+      # Elasticsearch. Ignored on subsequent runs.
+      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-}
+      # Use single node discovery in order to disable production mode and avoid bootstrap checks.
+      # see: https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
+      discovery.type: multi-node #single node
     networks:
       - elk
     restart: unless-stopped
@@ -86,7 +112,8 @@ services:
     networks:
       - elk
     depends_on:
-      - elasticsearch
+      - elasticsearch1
+      - elasticsearch2
     restart: unless-stopped
 
   kibana:
@@ -103,7 +130,8 @@ services:
     networks:
       - elk
     depends_on:
-      - elasticsearch
+      - elasticsearch1
+      - elasticsearch2
     restart: unless-stopped
 
 networks:
@@ -111,4 +139,5 @@ networks:
     driver: bridge
 
 volumes:
-  elasticsearch:
+  elasticsearch1:
+  elasticsearch2:
