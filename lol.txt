@@ -1,0 +1,15 @@
+open port :
+    5044: Logstash Beats input
+    50000: Logstash TCP input
+    9600: Logstash monitoring API
+    9200: Elasticsearch HTTP
+    9300: Elasticsearch TCP transport
+    5601: Kibana
+
+
+sudo ufw allow 5044
+sudo ufw allow 50000
+sudo ufw allow 9600
+sudo ufw allow 9200
+sudo ufw allow 9300
+sudo ufw allow 5601
