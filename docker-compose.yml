@@ -91,14 +91,14 @@ services:
   #   networks:
   #     - elk
   #   restart: unless-stopped
-  
+
   elasticsearch1:
     build:
       context: elasticsearch1/
       args:
         ELASTIC_VERSION: ${ELASTIC_VERSION}
     volumes:
-      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
+      - ./elasticsearch1/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
       - elasticsearch1:/usr/share/elasticsearch/data:Z
     ports:
       - 9200:9200
@@ -118,7 +118,7 @@ services:
       args:
         ELASTIC_VERSION: ${ELASTIC_VERSION}
     volumes:
-      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
+      - ./elasticsearch2/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
       - elasticsearch2:/usr/share/elasticsearch/data:Z
     environment:
       node.name: elasticsearch2
