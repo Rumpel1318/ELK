@@ -1,8 +1,0 @@
-filebeat.inputs:
-- type: log
-  enabled: true
-  paths:
-    # a rajouter les logs
-
-output.logstash:
-  hosts: ["172.21.13.160:5044"]

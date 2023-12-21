@@ -1,0 +1,37 @@
+
+  elasticsearch1:
+    build:
+      context: elasticsearch1/
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    volumes:
+      - ./elasticsearch1/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
+      - elasticsearch1:/usr/share/elasticsearch/data:Z
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment:
+      node.name: elasticsearch1
+      ES_JAVA_OPTS: -Xms512m -Xmx512m
+      discovery.seed_hosts: elasticsearch2
+      cluster.initial_master_nodes: elasticsearch1
+    networks:
+      - elk
+    restart: unless-stopped
+
+  elasticsearch2:
+    build:
+      context: elasticsearch2/
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    volumes:
+      - ./elasticsearch2/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
+      - elasticsearch2:/usr/share/elasticsearch/data:Z
+    environment:
+      node.name: elasticsearch2
+      ES_JAVA_OPTS: -Xms512m -Xmx512m
+      discovery.seed_hosts: elasticsearch1
+      cluster.initial_master_nodes: elasticsearch1
+    networks:
+      - elk
+    restart: unless-stopped
