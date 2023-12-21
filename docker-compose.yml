@@ -186,5 +186,5 @@ networks:
     driver: bridge
 
 volumes:
-  elasticsearch1:
-  elasticsearch2:
+  elasticsearch:
+
