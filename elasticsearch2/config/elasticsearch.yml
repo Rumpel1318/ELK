@@ -4,7 +4,7 @@
 #
 cluster.name: docker-cluster
 
-node.name: Elasticsearch2
+node.name: elasticsearch2
 node.master: false
 node.data: true
 node.ingest: false

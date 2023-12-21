@@ -4,10 +4,9 @@
 #
 cluster.name: docker-cluster
 
-node.name: Elasticsearch1
+node.name: elasticsearch1
 node.master: true
 node.data: false
-node.ingest: false
 network.host: 0.0.0.0
 
 ## X-Pack settings
